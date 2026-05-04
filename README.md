@@ -2,7 +2,7 @@
 
 # Bico
 
-> 🇦🇷 Español | [🇬🇧 English](README-EN.md)
+> Español | [English](README-EN.md)
 
 Bico es una potente grabadora de audio diseñada para ofrecer máxima estabilidad y fidelidad. Utiliza una arquitectura **Productor-Consumidor** mediante hilos independientes, garantizando una captura de datos fluida sin riesgo de pérdida de paquetes o saltos en el audio, incluso bajo carga del sistema.
 
@@ -16,6 +16,7 @@ Bico es una potente grabadora de audio diseñada para ofrecer máxima estabilida
 - **Selector de Carpeta de Destino**: Elección del directorio de guardado desde la interfaz antes de grabar.
 - **Soporte Multiformato**: Exportación versátil a `.wav`, `.flac`, `.ogg` y `.mp3` (vía FFmpeg).
 - **Seguridad de Datos**: Generación de archivos temporales únicos para prevenir la sobrescritura.
+- **Historial de Grabaciones**: Registro persistente en JSON con verificación de existencia de archivos; las grabaciones borradas manualmente se muestran tachadas.
 
 ## Arquitectura del Proyecto
 
@@ -23,14 +24,16 @@ El proyecto separa la lógica de negocio de la interfaz de usuario:
 
 ```
 Bico/
-├── main.py           → Punto de entrada de la aplicación.
+├── main.py                  → Punto de entrada de la aplicación.
 ├── modules/
-│   ├── recorder.py   → Motor de audio, normalización de nivel y utilidades de hardware.
+│   ├── recorder.py          → Motor de audio, normalización de nivel y utilidades de hardware.
+│   ├── history_manager.py   → Gestión del historial de grabaciones (JSON).
 │   └── __init__.py
 └── ui/
-    ├── app_window.py → Ventana principal y visualizador de barras de nivel.
-    ├── dialogs.py    → Diálogos auxiliares (nombre de archivo, etc.).
-    ├── styles.py     → Sistema de temas oscuro/claro.
+    ├── app_window.py        → Ventana principal y visualizador de barras de nivel.
+    ├── dialogs.py           → Diálogos auxiliares (nombre de archivo, etc.).
+    ├── history_dialog.py    → Diálogo de visualización del historial.
+    ├── styles.py            → Sistema de temas oscuro/claro.
     └── __init__.py
 ```
 
@@ -40,6 +43,7 @@ Bico/
 - **Python 3.8+**
 - **PortAudio**: Necesario para la biblioteca `sounddevice`.
 - **FFmpeg**: Opcional (requerido para exportación a `.mp3`).
+- **Ubuntu/Debian:** `sudo apt install portaudio19-dev ffmpeg`
 
 ### Instalación de Dependencias
 ```bash
@@ -53,17 +57,20 @@ pip install -r requirements.txt
 python main.py
 ```
 
-## Preview UI:
+## Vista Previa de la Interfaz
 
-<img width="334" height="498" alt="imagen" src="https://github.com/user-attachments/assets/76683b54-799e-4b54-a764-666e38186644" />
+<!-- Agrega aquí tus capturas de pantalla -->
+<!-- Ejemplo: -->
+<!-- <img width="400" alt="Bico - Pantalla principal" src="URL_DE_TU_IMAGEN" /> -->
+
+> *Capturas de pantalla próximamente.*
 
 ## Contribuidores
 
 Bico es el resultado del desarrollo conjunto enfocado en la eficiencia y la experiencia de usuario:
 
-- **[Igoru1](https://github.com/Igoru1)** - *Backend Architect*: Desarrollo del motor de audio asíncrono, gestión de buffers y lógica central de grabación.
-- **[Ars-byte](https://github.com/Ars-byte)** - *UI Lead (PyQt6) & Integration*: Desarrollo completo de la interfaz gráfica en PySide6, diseño del sistema de temas, resolución de bugs de concurrencia y optimización del flujo de guardado.
-- **[tebadev](https://github.com/tebadev)** - *Original Lead*: Diseño y lógica inicial del proyecto.
+- **[Igor](https://github.com/albeiroigor)** - *Backend Architect*: Desarrollo del motor de audio asíncrono, gestión de buffers y lógica central de grabación.
+- **[Ars-byte](https://github.com/Ars-byte)** - *UI Lead (PySide6) & Integration*: Desarrollo completo de la interfaz gráfica en PySide6, diseño del sistema de temas, resolución de bugs de concurrencia, optimización del flujo de guardado e implementación del historial de grabaciones.
 
 ## Licencia
 
