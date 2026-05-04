@@ -4,6 +4,13 @@ on:
   push:
     branches: [main]
     tags: ['v*']
+    paths:
+      - 'main.py'
+      - 'requirements.txt'
+      - 'modules/**.py'
+      - 'ui/**.py'
+      - 'assets/**'
+      - '.github/workflows/build.yml'
   workflow_dispatch:
 
 jobs:
