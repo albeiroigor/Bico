@@ -49,7 +49,7 @@ jobs:
           python -m nuitka \
             --onefile \
             --enable-plugin=pyside6 \
-            --include-qt-plugins=styles,platforms,imageformats,iconengines \
+            --include-qt-plugins=platforms,imageformats,iconengines \
             --noinclude-qt-plugins=webkit,webengine,multimedia,sql,bluetooth,pdf,printsupport,3d,charts,datavisualization,purchasing,serialbus,serialport,positioning,sensors,nfc,gamepad,qml,qmltooling,networkinformation,tls \
             --output-filename=bico \
             --remove-output \
@@ -133,7 +133,7 @@ jobs:
           python -m nuitka `
             --onefile `
             --enable-plugin=pyside6 `
-            --include-qt-plugins=styles,platforms,imageformats,iconengines `
+            --include-qt-plugins=platforms,imageformats,iconengines `
             --noinclude-qt-plugins=webkit,webengine,multimedia,sql,bluetooth,pdf,printsupport,3d,charts,datavisualization,purchasing,serialbus,serialport,positioning,sensors,nfc,gamepad,qml,qmltooling,networkinformation,tls `
             --windows-console-mode=disable `
             --output-filename=bico-build${{ github.run_number }}-windows.exe `
