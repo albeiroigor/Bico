@@ -155,7 +155,6 @@ jobs:
             --output-filename=bico-build${{ github.run_number }}-windows.exe `
             --remove-output `
             --assume-yes-for-downloads `
-            --static-libpython=yes `
             main.py
         env:
           CL: /Zm400
