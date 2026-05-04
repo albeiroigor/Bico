@@ -62,8 +62,6 @@ python main.py
 
 ## UI Preview
 
-<!-- Add your screenshots here -->
-<!-- Example: -->
 <img width="336" height="499" alt="imagen" src="https://github.com/user-attachments/assets/b7dccb5e-2a95-43c6-a931-b023cceca492" />
 
 
@@ -71,8 +69,8 @@ python main.py
 
 Bico is the result of collaborative development focused on efficiency and user experience:
 
-- **[Igor](https://github.com/albeiroigor)** - *Backend Architect*: Development of the asynchronous audio engine, buffer management, and core recording logic.
-- **[Ars-byte](https://github.com/Ars-byte)** - *UI Lead (PySide6) & Integration*: Complete development of the graphical interface in PySide6, theme system design, concurrency bug fixes, save flow optimization, and implementation of the recording history feature.
+- **[Igor](https://github.com/albeiroigor)** - *Frontend Architect*: Complete development of the graphical interface in PySide6, theme system design, concurrency bug fixes, save flow optimization, and implementation of the recording history feature.
+- **[tebadev](https://github.com/tebadev)** - *Backend Architect and Original Lead*: Initial project design and logic.
 
 ## License
 

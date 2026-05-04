@@ -65,8 +65,8 @@ python main.py
 
 Bico es el resultado del desarrollo conjunto enfocado en la eficiencia y la experiencia de usuario:
 
-- **[Igor](https://github.com/albeiroigor)** - *Backend Architect*: Desarrollo del motor de audio asíncrono, gestión de buffers y lógica central de grabación.
-- **[Ars-byte](https://github.com/Ars-byte)** - *UI Lead (PySide6) & Integration*: Desarrollo completo de la interfaz gráfica en PySide6, diseño del sistema de temas, resolución de bugs de concurrencia, optimización del flujo de guardado e implementación del historial de grabaciones.
+- **[Igor](https://github.com/albeiroigor)** - *Frontend Architect*: Complete development of the graphical interface in PySide6, theme system design, concurrency bug fixes, save flow optimization, and implementation of the recording history feature.
+- **[tebadev](https://github.com/tebadev)** - *Backend Architect and Original Lead*: Initial project design and logic.
 
 ## Licencia
 
