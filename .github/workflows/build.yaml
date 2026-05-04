@@ -22,6 +22,13 @@ jobs:
           sudo apt-get update -q
           sudo apt-get install -y patchelf ccache libportaudio2
 
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-linux-${{ hashFiles('requirements.txt') }}
+          restore-keys: pip-linux-
+
       - name: Install Python dependencies
         run: |
           pip install --upgrade pip
@@ -39,7 +46,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.ccache
-          key: ccache-linux-${{ github.sha }}
+          key: ccache-linux-${{ hashFiles('**/*.py') }}
           restore-keys: ccache-linux-
 
       - name: Compile with Nuitka
@@ -49,11 +56,12 @@ jobs:
           python -m nuitka \
             --onefile \
             --enable-plugin=pyside6 \
-            --include-qt-plugins=platforms,imageformats,iconengines \
-            --noinclude-qt-plugins=webkit,webengine,multimedia,sql,bluetooth,pdf,printsupport,3d,charts,datavisualization,purchasing,serialbus,serialport,positioning,sensors,nfc,gamepad,qml,qmltooling,networkinformation,tls \
+            --include-qt-plugins=platforms \
+            --noinclude-qt-plugins=webkit,webengine,multimedia,sql,bluetooth,pdf,printsupport,3d,charts,datavisualization,purchasing,serialbus,serialport,positioning,sensors,nfc,gamepad,qml,qmltooling,networkinformation,tls,imageformats,iconengines \
             --output-filename=bico \
             --remove-output \
             --assume-yes-for-downloads \
+            --static-libpython=yes \
             main.py
 
       - name: Build AppImage
@@ -85,10 +93,11 @@ jobs:
           Categories=AudioVideo;
           EOF
 
-          convert -size 256x256 xc:#4CAF50 AppDir/bico.png
-          cp AppDir/bico.png AppDir/usr/share/icons/hicolor/256x256/apps/
+          # Usar el icono del repositorio (debe existir assets/bico.png)
+          cp assets/bico.png AppDir/bico.png
+          cp assets/bico.png AppDir/usr/share/icons/hicolor/256x256/apps/
 
-          APPIMAGE_NAME="bico-${GITHUB_REF_NAME:-dev}-build${{ github.run_number }}-linux.AppImage"
+          APPIMAGE_NAME="bico-continuous-build${{ github.run_number }}-linux.AppImage"
           ARCH=x86_64 ./appimagetool-x86_64.AppImage --appimage-extract-and-run AppDir "$APPIMAGE_NAME"
           echo "APPIMAGE_NAME=$APPIMAGE_NAME" >> $GITHUB_ENV
 
@@ -115,6 +124,13 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: pip-windows-${{ hashFiles('requirements.txt') }}
+          restore-keys: pip-windows-
+
       - name: Install Python dependencies
         run: |
           pip install --upgrade pip
@@ -133,12 +149,13 @@ jobs:
           python -m nuitka `
             --onefile `
             --enable-plugin=pyside6 `
-            --include-qt-plugins=platforms,imageformats,iconengines `
-            --noinclude-qt-plugins=webkit,webengine,multimedia,sql,bluetooth,pdf,printsupport,3d,charts,datavisualization,purchasing,serialbus,serialport,positioning,sensors,nfc,gamepad,qml,qmltooling,networkinformation,tls `
+            --include-qt-plugins=platforms `
+            --noinclude-qt-plugins=webkit,webengine,multimedia,sql,bluetooth,pdf,printsupport,3d,charts,datavisualization,purchasing,serialbus,serialport,positioning,sensors,nfc,gamepad,qml,qmltooling,networkinformation,tls,imageformats,iconengines `
             --windows-console-mode=disable `
             --output-filename=bico-build${{ github.run_number }}-windows.exe `
             --remove-output `
             --assume-yes-for-downloads `
+            --static-libpython=yes `
             main.py
         env:
           CL: /Zm400
