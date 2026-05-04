@@ -11,6 +11,8 @@ from PySide6.QtGui import QPainter, QColor
 from ui.styles import TEMAS, obtener_estilo
 from ui.dialogs import DialogoGuardar
 from modules.recorder import AudioUtilidades, inicializador
+from modules.history_manager import HistoryManager
+from ui.history_dialog import HistoryDialog
 
 
 # ──────────────────────────────────────────────
@@ -90,6 +92,9 @@ class BicoApp(QWidget):
         self._guardando = False
         self._motor_pendiente = None                     # Motor que estamos esperando para guardar
 
+        # Gestor del historial de grabaciones
+        self.history_manager = HistoryManager()
+
         try:
             self.micros = list(AudioUtilidades.detectar_microfonos())
         except Exception as e:
@@ -124,9 +129,20 @@ class BicoApp(QWidget):
     def _setup_ui(self):
         root = QVBoxLayout(self)
 
-        # Header con botón de tema
+        # Header con botones de historial y tema
         header = QHBoxLayout()
+        # Botón de historial (izquierda)
+        self.btn_historial = QPushButton()
+        self.btn_historial.setObjectName("btn_historial")
+        self.btn_historial.setFixedSize(32, 32)
+        self.btn_historial.setText("...")
+        self.btn_historial.setAccessibleName("Historial")
+        self.btn_historial.clicked.connect(self._mostrar_historial)
+        header.addWidget(self.btn_historial)
+
         header.addStretch()
+
+        # Botón de tema (derecha)
         self.btn_tema = QPushButton()
         self.btn_tema.setObjectName("btn_tema")
         self.btn_tema.setFixedSize(32, 32)
@@ -236,6 +252,14 @@ class BicoApp(QWidget):
             self.lbl_t.setText(f"{m:02d}:{s:02d}")
 
     # ──────────────────────────────────────────────
+    # Historial
+    # ──────────────────────────────────────────────
+
+    def _mostrar_historial(self):
+        dlg = HistoryDialog(self, self.history_manager)
+        dlg.exec()
+
+    # ──────────────────────────────────────────────
     # Acciones de grabación
     # ──────────────────────────────────────────────
 
@@ -340,7 +364,15 @@ class BicoApp(QWidget):
     def _dialogo_nombre(self, tmp: str, fmt: str, carpeta: str):
         dlg = DialogoGuardar(self)
         if dlg.exec() == DialogoGuardar.DialogCode.Accepted:
+            # Construimos la ruta final exactamente igual que en AudioUtilidades
+            nombre_final = dlg.nombre if dlg.nombre.endswith(f".{fmt}") else dlg.nombre + f".{fmt}"
+            ruta_final = os.path.join(carpeta, nombre_final)
+
             AudioUtilidades.guardar_archivo(tmp, carpeta, dlg.nombre, fmt)
+
+            # Si el archivo se guardó correctamente, lo añadimos al historial
+            if os.path.exists(ruta_final):
+                self.history_manager.add(ruta_final, fmt)
         else:
             if os.path.exists(tmp):
                 try:
