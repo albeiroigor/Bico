@@ -64,9 +64,8 @@ python main.py
 
 <!-- Add your screenshots here -->
 <!-- Example: -->
-<!-- <img width="400" alt="Bico - Main screen" src="YOUR_IMAGE_URL" /> -->
+<img width="336" height="499" alt="imagen" src="https://github.com/user-attachments/assets/b7dccb5e-2a95-43c6-a931-b023cceca492" />
 
-> *Screenshots coming soon.*
 
 ## Contributors
 

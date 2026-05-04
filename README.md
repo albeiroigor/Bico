@@ -59,11 +59,7 @@ python main.py
 
 ## Vista Previa de la Interfaz
 
-<!-- Agrega aquí tus capturas de pantalla -->
-<!-- Ejemplo: -->
-<!-- <img width="400" alt="Bico - Pantalla principal" src="URL_DE_TU_IMAGEN" /> -->
-
-> *Capturas de pantalla próximamente.*
+<img width="336" height="499" alt="imagen" src="https://github.com/user-attachments/assets/b7dccb5e-2a95-43c6-a931-b023cceca492" />
 
 ## Contribuidores
 
